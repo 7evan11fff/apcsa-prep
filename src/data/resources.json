@@ -1,0 +1,130 @@
+{
+  "resources": [
+    {
+      "id": "csawesome",
+      "title": "CSAwesome Interactive Textbook",
+      "url": "https://runestone.academy/ns/books/published/csawesome/index.html",
+      "description": "Free, comprehensive interactive textbook with runnable Java examples and practice problems. Aligned with the AP CS A curriculum.",
+      "unit": null,
+      "type": "textbook",
+      "tags": ["free", "interactive", "comprehensive"]
+    },
+    {
+      "id": "apcsexamprep",
+      "title": "AP CSA Exam Prep Free Textbook",
+      "url": "https://www.apcsexamprep.com/pages/ap-csa-free-textbook",
+      "description": "Free online textbook aligned with the 2025-2026 College Board curriculum, covering all 4 units with clear explanations.",
+      "unit": null,
+      "type": "textbook",
+      "tags": ["free", "2026-aligned", "comprehensive"]
+    },
+    {
+      "id": "codingbat",
+      "title": "CodingBat Java Practice",
+      "url": "https://codingbat.com/java",
+      "description": "Free live coding problems organized by topic. Instant feedback on your Java code. Great for building fluency.",
+      "unit": null,
+      "type": "practice",
+      "tags": ["free", "coding", "instant-feedback"]
+    },
+    {
+      "id": "csplusplus",
+      "title": "CS++ Daily Practice Questions",
+      "url": "https://csplusplus.com/apcsa/",
+      "description": "5 rotating AP CS A practice questions daily from a pool of 500+. Free daily practice to build consistency.",
+      "unit": null,
+      "type": "practice",
+      "tags": ["free", "daily", "mcq"]
+    },
+    {
+      "id": "codehs",
+      "title": "CodeHS AP CSA Resource Hub",
+      "url": "https://codelouder.org/ap-csa.html",
+      "description": "Hundreds of autograded Java practice problems organized by skill and level. Includes AP CSA Question of the Day.",
+      "unit": null,
+      "type": "practice",
+      "tags": ["free", "autograded", "organized"]
+    },
+    {
+      "id": "collegeboard",
+      "title": "College Board AP CS A Official Page",
+      "url": "https://apstudents.collegeboard.org/courses/ap-computer-science-a",
+      "description": "Official AP CS A course page with exam information, scoring guidelines, and sample questions from College Board.",
+      "unit": null,
+      "type": "reference",
+      "tags": ["official", "exam-info", "scoring"]
+    },
+    {
+      "id": "collegeboard-frqs",
+      "title": "College Board Past FRQs",
+      "url": "https://apcentral.collegeboard.org/courses/ap-computer-science-a/exam/past-exam-questions",
+      "description": "Official archive of past Free Response Questions with scoring guidelines. Essential for FRQ practice.",
+      "unit": null,
+      "type": "practice",
+      "tags": ["official", "frq", "scoring-guidelines"]
+    },
+    {
+      "id": "apcsdebugger",
+      "title": "AP CS Debugger — 2026 Changes",
+      "url": "https://apcsdebugger.com/2025/05/26/2026-ap-computer-science-a-exam-whats-new/",
+      "description": "Detailed breakdown of what changed for the 2026 AP CS A exam: new topics, removed topics, and format changes.",
+      "unit": null,
+      "type": "reference",
+      "tags": ["2026-changes", "exam-format"]
+    },
+    {
+      "id": "apcsexamprep-frqs",
+      "title": "AP CSA FRQ Archive (2004-2025)",
+      "url": "https://www.apcsexamprep.com/pages/ap-csa-frq-archive",
+      "description": "Complete archive of all past AP CS A FRQs from 2004-2025 with detailed Java solutions organized by year.",
+      "unit": null,
+      "type": "practice",
+      "tags": ["free", "frq", "solutions", "archive"]
+    },
+    {
+      "id": "youtube-collegeboard",
+      "title": "College Board AP CS A Review Videos",
+      "url": "https://www.youtube.com/results?search_query=AP+Computer+Science+A+review+2026",
+      "description": "Official and community review videos covering key AP CS A concepts, exam strategies, and walkthroughs.",
+      "unit": null,
+      "type": "video",
+      "tags": ["video", "review", "free"]
+    },
+    {
+      "id": "reddit-apcsa",
+      "title": "r/APStudents Community",
+      "url": "https://www.reddit.com/r/APStudents/",
+      "description": "Active Reddit community for AP students. Get answers to questions, share study tips, and find study partners.",
+      "unit": null,
+      "type": "forum",
+      "tags": ["community", "discussion", "tips"]
+    },
+    {
+      "id": "java-docs",
+      "title": "Java SE Documentation",
+      "url": "https://docs.oracle.com/en/java/javase/17/docs/api/index.html",
+      "description": "Official Java API documentation. Reference for String, ArrayList, Math, and other classes used on the AP exam.",
+      "unit": null,
+      "type": "reference",
+      "tags": ["official", "api", "documentation"]
+    },
+    {
+      "id": "visualgo",
+      "title": "VisuAlgo — Algorithm Visualizations",
+      "url": "https://visualgo.net/en",
+      "description": "Interactive visualizations of sorting algorithms, searching, and data structures. See how algorithms work step by step.",
+      "unit": 4,
+      "type": "tool",
+      "tags": ["interactive", "sorting", "visualization"]
+    },
+    {
+      "id": "jdoodle",
+      "title": "JDoodle Online Java Compiler",
+      "url": "https://www.jdoodle.com/online-java-compiler/",
+      "description": "Free online Java compiler and IDE. Write, compile, and run Java code in your browser without installing anything.",
+      "unit": null,
+      "type": "tool",
+      "tags": ["free", "online-compiler", "java"]
+    }
+  ]
+}

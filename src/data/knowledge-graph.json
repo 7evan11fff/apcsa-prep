@@ -1,0 +1,404 @@
+{
+  "topics": [
+    {
+      "id": "primitive-types",
+      "title": "Primitive Types",
+      "unit": 1,
+      "description": "Learn about Java's primitive data types: int, double, and boolean. Understand how data is stored and used in programs.",
+      "prerequisites": [],
+      "difficulty": 1,
+      "estimatedMinutes": 20,
+      "examWeight": 2.5
+    },
+    {
+      "id": "variables-and-operators",
+      "title": "Variables, Operators, and Expressions",
+      "unit": 1,
+      "description": "Declare and initialize variables, use arithmetic and assignment operators, and evaluate expressions.",
+      "prerequisites": ["primitive-types"],
+      "difficulty": 1,
+      "estimatedMinutes": 25,
+      "examWeight": 2.5
+    },
+    {
+      "id": "type-casting",
+      "title": "Type Casting and Ranges",
+      "unit": 1,
+      "description": "Understand implicit and explicit type casting between int and double, and the range limits of primitive types.",
+      "prerequisites": ["variables-and-operators"],
+      "difficulty": 2,
+      "estimatedMinutes": 20,
+      "examWeight": 2.5
+    },
+    {
+      "id": "string-basics",
+      "title": "String Class Basics",
+      "unit": 1,
+      "description": "Create String objects, understand immutability, and use concatenation. Strings are reference types, not primitives.",
+      "prerequisites": ["variables-and-operators"],
+      "difficulty": 2,
+      "estimatedMinutes": 20,
+      "examWeight": 2.5
+    },
+    {
+      "id": "string-methods",
+      "title": "String Methods",
+      "unit": 1,
+      "description": "Use essential String methods: length(), substring(), indexOf(), equals(), compareTo(), and charAt().",
+      "prerequisites": ["string-basics"],
+      "difficulty": 3,
+      "estimatedMinutes": 30,
+      "examWeight": 2.5
+    },
+    {
+      "id": "wrapper-classes",
+      "title": "Wrapper Classes (Integer, Double)",
+      "unit": 1,
+      "description": "Understand autoboxing and unboxing between primitives and their wrapper classes Integer and Double.",
+      "prerequisites": ["primitive-types"],
+      "difficulty": 2,
+      "estimatedMinutes": 15,
+      "examWeight": 2.5
+    },
+    {
+      "id": "math-class",
+      "title": "Math Class Methods",
+      "unit": 1,
+      "description": "Use static methods from the Math class: abs(), pow(), sqrt(), random(), and more.",
+      "prerequisites": ["variables-and-operators"],
+      "difficulty": 2,
+      "estimatedMinutes": 20,
+      "examWeight": 2.5
+    },
+    {
+      "id": "object-construction",
+      "title": "Object Construction and Method Calls",
+      "unit": 1,
+      "description": "Instantiate objects using constructors and call methods on objects. Understand the difference between static and instance methods.",
+      "prerequisites": ["string-basics", "math-class"],
+      "difficulty": 3,
+      "estimatedMinutes": 30,
+      "examWeight": 2.5
+    },
+    {
+      "id": "boolean-expressions",
+      "title": "Boolean Expressions and Comparisons",
+      "unit": 2,
+      "description": "Write boolean expressions using relational operators (==, !=, <, >, <=, >=) and compare values.",
+      "prerequisites": ["variables-and-operators"],
+      "difficulty": 2,
+      "estimatedMinutes": 20,
+      "examWeight": 3.0
+    },
+    {
+      "id": "if-statements",
+      "title": "if/else if/else Statements",
+      "unit": 2,
+      "description": "Use conditional statements to control program flow based on boolean conditions.",
+      "prerequisites": ["boolean-expressions"],
+      "difficulty": 2,
+      "estimatedMinutes": 25,
+      "examWeight": 3.0
+    },
+    {
+      "id": "compound-boolean",
+      "title": "Compound Boolean Expressions",
+      "unit": 2,
+      "description": "Combine boolean expressions using logical operators AND (&&), OR (||), and NOT (!). Apply De Morgan's Laws.",
+      "prerequisites": ["boolean-expressions"],
+      "difficulty": 3,
+      "estimatedMinutes": 25,
+      "examWeight": 3.0
+    },
+    {
+      "id": "conditional-logic",
+      "title": "Complex Conditional Logic",
+      "unit": 2,
+      "description": "Write nested conditionals, multi-branch logic, and understand short-circuit evaluation.",
+      "prerequisites": ["if-statements", "compound-boolean"],
+      "difficulty": 3,
+      "estimatedMinutes": 30,
+      "examWeight": 3.0
+    },
+    {
+      "id": "while-loops",
+      "title": "while Loops",
+      "unit": 2,
+      "description": "Use while loops for indefinite iteration. Understand loop conditions, infinite loops, and sentinel values.",
+      "prerequisites": ["if-statements"],
+      "difficulty": 2,
+      "estimatedMinutes": 25,
+      "examWeight": 3.0
+    },
+    {
+      "id": "for-loops",
+      "title": "for Loops",
+      "unit": 2,
+      "description": "Use for loops for definite iteration. Understand initialization, condition, and update expressions.",
+      "prerequisites": ["while-loops"],
+      "difficulty": 2,
+      "estimatedMinutes": 25,
+      "examWeight": 3.0
+    },
+    {
+      "id": "loop-algorithms",
+      "title": "Loop Algorithms",
+      "unit": 2,
+      "description": "Implement common loop patterns: counting, summing, finding minimum/maximum, and computing averages.",
+      "prerequisites": ["for-loops"],
+      "difficulty": 3,
+      "estimatedMinutes": 30,
+      "examWeight": 3.0
+    },
+    {
+      "id": "string-iteration",
+      "title": "String Traversal with Loops",
+      "unit": 2,
+      "description": "Traverse strings character by character using loops and charAt(). Build new strings from existing ones.",
+      "prerequisites": ["string-methods", "for-loops"],
+      "difficulty": 3,
+      "estimatedMinutes": 25,
+      "examWeight": 3.0
+    },
+    {
+      "id": "nested-loops",
+      "title": "Nested Loops",
+      "unit": 2,
+      "description": "Use loops inside loops for pattern generation, grid traversal, and complex iterations.",
+      "prerequisites": ["for-loops"],
+      "difficulty": 4,
+      "estimatedMinutes": 35,
+      "examWeight": 3.0
+    },
+    {
+      "id": "code-tracing",
+      "title": "Informal Code Tracing",
+      "unit": 2,
+      "description": "Trace through code by hand to predict output. Follow variable values through loops and conditionals.",
+      "prerequisites": ["for-loops", "conditional-logic"],
+      "difficulty": 3,
+      "estimatedMinutes": 30,
+      "examWeight": 3.0
+    },
+    {
+      "id": "class-anatomy",
+      "title": "Anatomy of a Class",
+      "unit": 3,
+      "description": "Understand the structure of a Java class: class header, instance variables, constructors, and methods.",
+      "prerequisites": ["object-construction"],
+      "difficulty": 2,
+      "estimatedMinutes": 25,
+      "examWeight": 3.0
+    },
+    {
+      "id": "constructors",
+      "title": "Writing Constructors",
+      "unit": 3,
+      "description": "Write constructors to initialize objects. Understand default constructors and overloading.",
+      "prerequisites": ["class-anatomy"],
+      "difficulty": 2,
+      "estimatedMinutes": 25,
+      "examWeight": 3.0
+    },
+    {
+      "id": "instance-variables",
+      "title": "Instance Variables and Encapsulation",
+      "unit": 3,
+      "description": "Declare private instance variables and understand encapsulation as a core OOP principle.",
+      "prerequisites": ["class-anatomy"],
+      "difficulty": 2,
+      "estimatedMinutes": 20,
+      "examWeight": 3.0
+    },
+    {
+      "id": "accessor-methods",
+      "title": "Accessor (Getter) Methods",
+      "unit": 3,
+      "description": "Write public getter methods that return values of private instance variables.",
+      "prerequisites": ["instance-variables"],
+      "difficulty": 2,
+      "estimatedMinutes": 15,
+      "examWeight": 3.0
+    },
+    {
+      "id": "mutator-methods",
+      "title": "Mutator (Setter) Methods",
+      "unit": 3,
+      "description": "Write public setter methods that modify private instance variables with validation.",
+      "prerequisites": ["instance-variables"],
+      "difficulty": 2,
+      "estimatedMinutes": 15,
+      "examWeight": 3.0
+    },
+    {
+      "id": "method-decomposition",
+      "title": "Method Decomposition",
+      "unit": 3,
+      "description": "Break complex problems into smaller methods. Understand parameters, return types, and method calls within a class.",
+      "prerequisites": ["accessor-methods", "mutator-methods"],
+      "difficulty": 3,
+      "estimatedMinutes": 30,
+      "examWeight": 3.0
+    },
+    {
+      "id": "static-members",
+      "title": "Static Variables and Methods",
+      "unit": 3,
+      "description": "Understand the difference between static and instance members. Use static methods and variables appropriately.",
+      "prerequisites": ["method-decomposition"],
+      "difficulty": 3,
+      "estimatedMinutes": 25,
+      "examWeight": 3.0
+    },
+    {
+      "id": "scope-and-access",
+      "title": "Scope and Access Modifiers",
+      "unit": 3,
+      "description": "Understand variable scope (local vs instance) and access modifiers (public vs private).",
+      "prerequisites": ["instance-variables"],
+      "difficulty": 3,
+      "estimatedMinutes": 20,
+      "examWeight": 3.0
+    },
+    {
+      "id": "this-keyword",
+      "title": "The this Keyword",
+      "unit": 3,
+      "description": "Use the this keyword to refer to the current object, distinguish instance variables from parameters, and call other constructors.",
+      "prerequisites": ["constructors", "instance-variables"],
+      "difficulty": 3,
+      "estimatedMinutes": 20,
+      "examWeight": 3.0
+    },
+    {
+      "id": "file-io",
+      "title": "Reading Files with File and Scanner",
+      "unit": 3,
+      "description": "Read data from text files using java.io.File and java.util.Scanner. Process file contents line by line.",
+      "prerequisites": ["object-construction", "while-loops"],
+      "difficulty": 3,
+      "estimatedMinutes": 30,
+      "examWeight": 3.0
+    },
+    {
+      "id": "array-basics",
+      "title": "1D Array Creation and Access",
+      "unit": 4,
+      "description": "Create arrays, access elements by index, understand array length, and handle ArrayIndexOutOfBoundsException.",
+      "prerequisites": ["for-loops"],
+      "difficulty": 2,
+      "estimatedMinutes": 25,
+      "examWeight": 1.67
+    },
+    {
+      "id": "array-traversal",
+      "title": "Array Traversal Patterns",
+      "unit": 4,
+      "description": "Traverse arrays using standard for loops and enhanced for-each loops. Understand when to use each pattern.",
+      "prerequisites": ["array-basics"],
+      "difficulty": 3,
+      "estimatedMinutes": 25,
+      "examWeight": 1.67
+    },
+    {
+      "id": "array-algorithms",
+      "title": "Array Algorithms",
+      "unit": 4,
+      "description": "Implement standard array algorithms: sum, average, find min/max, count matches, and shift elements.",
+      "prerequisites": ["array-traversal", "loop-algorithms"],
+      "difficulty": 3,
+      "estimatedMinutes": 35,
+      "examWeight": 1.67
+    },
+    {
+      "id": "arraylist-basics",
+      "title": "ArrayList Creation and Methods",
+      "unit": 4,
+      "description": "Create ArrayLists, use add(), get(), set(), remove(), and size() methods. Understand generics syntax.",
+      "prerequisites": ["object-construction", "array-basics"],
+      "difficulty": 2,
+      "estimatedMinutes": 25,
+      "examWeight": 1.67
+    },
+    {
+      "id": "arraylist-traversal",
+      "title": "ArrayList Traversal and Modification",
+      "unit": 4,
+      "description": "Traverse ArrayLists safely while adding or removing elements. Avoid ConcurrentModificationException pitfalls.",
+      "prerequisites": ["arraylist-basics"],
+      "difficulty": 3,
+      "estimatedMinutes": 30,
+      "examWeight": 1.67
+    },
+    {
+      "id": "arraylist-algorithms",
+      "title": "ArrayList Algorithms",
+      "unit": 4,
+      "description": "Apply standard algorithms to ArrayLists: filtering, searching, accumulating, and transforming collections.",
+      "prerequisites": ["arraylist-traversal", "array-algorithms"],
+      "difficulty": 3,
+      "estimatedMinutes": 30,
+      "examWeight": 1.67
+    },
+    {
+      "id": "2d-array-basics",
+      "title": "2D Array Creation and Access",
+      "unit": 4,
+      "description": "Create 2D arrays (arrays of arrays), access elements with row and column indices, understand dimensions.",
+      "prerequisites": ["array-basics"],
+      "difficulty": 3,
+      "estimatedMinutes": 25,
+      "examWeight": 1.67
+    },
+    {
+      "id": "2d-array-traversal",
+      "title": "2D Array Traversal",
+      "unit": 4,
+      "description": "Traverse 2D arrays using nested loops in row-major and column-major order. Process grids and matrices.",
+      "prerequisites": ["2d-array-basics", "nested-loops"],
+      "difficulty": 4,
+      "estimatedMinutes": 35,
+      "examWeight": 1.67
+    },
+    {
+      "id": "linear-search",
+      "title": "Linear Search",
+      "unit": 4,
+      "description": "Implement sequential search through arrays and ArrayLists. Understand O(n) time complexity.",
+      "prerequisites": ["array-traversal"],
+      "difficulty": 2,
+      "estimatedMinutes": 20,
+      "examWeight": 1.67
+    },
+    {
+      "id": "binary-search",
+      "title": "Binary Search",
+      "unit": 4,
+      "description": "Implement binary search on sorted arrays. Understand O(log n) time complexity and the requirement for sorted data.",
+      "prerequisites": ["linear-search"],
+      "difficulty": 3,
+      "estimatedMinutes": 30,
+      "examWeight": 1.67
+    },
+    {
+      "id": "selection-sort",
+      "title": "Selection Sort",
+      "unit": 4,
+      "description": "Implement selection sort by repeatedly finding the minimum element. Understand O(n²) time complexity.",
+      "prerequisites": ["array-algorithms"],
+      "difficulty": 3,
+      "estimatedMinutes": 30,
+      "examWeight": 1.67
+    },
+    {
+      "id": "insertion-sort",
+      "title": "Insertion Sort",
+      "unit": 4,
+      "description": "Implement insertion sort by building a sorted portion one element at a time. Compare with selection sort.",
+      "prerequisites": ["selection-sort"],
+      "difficulty": 4,
+      "estimatedMinutes": 30,
+      "examWeight": 1.67
+    }
+  ]
+}
