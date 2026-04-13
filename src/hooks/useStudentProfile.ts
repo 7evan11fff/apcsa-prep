@@ -58,13 +58,42 @@ export function useStudentProfile() {
       const questionHistory = { ...profile.questionHistory };
       if (questionId) {
         const prev = questionHistory[questionId];
+        const now = new Date().toISOString();
+        const prevConsecutive = prev?.consecutiveCorrect ?? 0;
+        const newConsecutive = correct ? prevConsecutive + 1 : 0;
+        
+        const prevStability = prev?.stability ?? 1;
+        let newStability: number;
+        let newNextReview: string | null;
+        
+        if (correct) {
+          newStability = Math.min(prevStability * 2.5, 90);
+          const reviewDays = Math.max(1, Math.round(newStability));
+          const reviewDate = new Date();
+          reviewDate.setDate(reviewDate.getDate() + reviewDays);
+          newNextReview = reviewDate.toISOString();
+        } else {
+          newStability = Math.max(0.5, prevStability * 0.3);
+          const reviewDate = new Date();
+          reviewDate.setMinutes(reviewDate.getMinutes() + 10);
+          newNextReview = reviewDate.toISOString();
+        }
+        
+        const wasMissed = prev?.lastIncorrectAt && (!prev?.clearedAt || prev.lastIncorrectAt > prev.clearedAt);
+        const nowCleared = wasMissed && correct && newConsecutive >= 2;
+        
         questionHistory[questionId] = {
           questionId,
           topicId,
           attempts: (prev?.attempts ?? 0) + 1,
           correctCount: (prev?.correctCount ?? 0) + (correct ? 1 : 0),
-          lastAttempt: new Date().toISOString(),
+          lastAttempt: now,
           lastCorrect: correct,
+          consecutiveCorrect: newConsecutive,
+          lastIncorrectAt: correct ? (prev?.lastIncorrectAt ?? null) : now,
+          clearedAt: nowCleared ? now : (prev?.clearedAt ?? null),
+          nextReviewAt: newNextReview,
+          stability: newStability,
         };
       }
 
@@ -105,7 +134,6 @@ export function useStudentProfile() {
           [topicId]: {
             ...state,
             lessonCompleted: true,
-            mastery: Math.max(state.mastery, 0.3),
             lastReview: new Date().toISOString(),
           },
         },

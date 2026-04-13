@@ -132,6 +132,28 @@ export async function getProfile(): Promise<StudentProfile> {
     const p = profile as StudentProfile;
     if (!p.questionHistory) p.questionHistory = {};
     
+    // Migrate old question records to new format with spaced repetition fields
+    for (const qId of Object.keys(p.questionHistory)) {
+      const record = p.questionHistory[qId];
+      if (record.consecutiveCorrect === undefined) {
+        record.consecutiveCorrect = record.lastCorrect ? 1 : 0;
+      }
+      if (record.lastIncorrectAt === undefined) {
+        record.lastIncorrectAt = record.lastCorrect ? null : record.lastAttempt;
+      }
+      if (record.clearedAt === undefined) {
+        record.clearedAt = null;
+      }
+      if (record.nextReviewAt === undefined) {
+        const reviewDate = new Date(record.lastAttempt);
+        reviewDate.setDate(reviewDate.getDate() + 1);
+        record.nextReviewAt = reviewDate.toISOString();
+      }
+      if (record.stability === undefined) {
+        record.stability = 1;
+      }
+    }
+    
     // Ensure all topics exist (in case new topics were added)
     const defaultStates = createDefaultTopicStates();
     for (const topicId of Object.keys(defaultStates)) {

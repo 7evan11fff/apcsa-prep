@@ -5,7 +5,7 @@ import { getQuizzesByTopic } from "@/data/quizzes";
 
 export interface Checkpoint {
   id: string;
-  type: "mastery" | "review" | "unit-test";
+  type: "mastery" | "review" | "unit-test" | "spaced-repetition";
   title: string;
   description: string;
   topicIds: string[];
@@ -26,6 +26,19 @@ function getTopicRetrievability(state: TopicState): number {
   return getRetrievability(fsrs);
 }
 
+function isQuestionDueForReview(record: QuestionRecord | undefined): boolean {
+  if (!record) return false;
+  if (!record.nextReviewAt) return false;
+  return new Date(record.nextReviewAt) <= new Date();
+}
+
+function isQuestionUncleared(record: QuestionRecord | undefined): boolean {
+  if (!record) return false;
+  if (!record.lastIncorrectAt) return false;
+  if (!record.clearedAt) return true;
+  return new Date(record.lastIncorrectAt) > new Date(record.clearedAt);
+}
+
 function pickQuestions(
   topicIds: string[],
   count: number,
@@ -36,24 +49,75 @@ function pickQuestions(
     pool.push(...getQuizzesByTopic(id));
   }
 
-  // Sort: previously missed questions first, then unseen, then correctly answered
   const scored = pool.map((q) => {
     const record = questionHistory[q.id];
     let priority: number;
+    
     if (!record) {
-      priority = 1; // unseen
+      priority = 1;
+    } else if (isQuestionUncleared(record)) {
+      priority = 3;
+    } else if (isQuestionDueForReview(record)) {
+      priority = 2.5;
     } else if (!record.lastCorrect) {
-      priority = 2; // last answer was wrong — highest priority
-    } else if (record.correctCount < record.attempts) {
-      priority = 1.5; // gotten wrong before even if last was correct
+      priority = 2;
+    } else if (record.consecutiveCorrect < 3) {
+      priority = 1.5;
     } else {
-      priority = 0; // consistently correct — lowest priority
+      priority = 0;
     }
-    return { q, priority, noise: Math.random() * 0.5 };
+    return { q, priority, noise: Math.random() * 0.3 };
   });
 
   scored.sort((a, b) => (b.priority + b.noise) - (a.priority + a.noise));
   return scored.slice(0, count).map((s) => s.q);
+}
+
+function pickUnclearedQuestions(
+  questionHistory: Record<string, QuestionRecord>
+): QuizQuestion[] {
+  const unclearedIds = Object.values(questionHistory)
+    .filter(isQuestionUncleared)
+    .map((r) => r.questionId);
+  
+  if (unclearedIds.length === 0) return [];
+  
+  const topicIds = Array.from(new Set(
+    Object.values(questionHistory)
+      .filter(isQuestionUncleared)
+      .map((r) => r.topicId)
+  ));
+  
+  const pool: QuizQuestion[] = [];
+  for (const id of topicIds) {
+    pool.push(...getQuizzesByTopic(id).filter((q) => unclearedIds.includes(q.id)));
+  }
+  
+  return pool.slice(0, 8);
+}
+
+function pickDueQuestions(
+  questionHistory: Record<string, QuestionRecord>
+): QuizQuestion[] {
+  const dueRecords = Object.values(questionHistory)
+    .filter(isQuestionDueForReview)
+    .sort((a, b) => {
+      const aTime = new Date(a.nextReviewAt!).getTime();
+      const bTime = new Date(b.nextReviewAt!).getTime();
+      return aTime - bTime;
+    });
+  
+  if (dueRecords.length === 0) return [];
+  
+  const dueIds = dueRecords.slice(0, 10).map((r) => r.questionId);
+  const topicIds = Array.from(new Set(dueRecords.slice(0, 10).map((r) => r.topicId)));
+  
+  const pool: QuizQuestion[] = [];
+  for (const id of topicIds) {
+    pool.push(...getQuizzesByTopic(id).filter((q) => dueIds.includes(q.id)));
+  }
+  
+  return pool;
 }
 
 export function generateCheckpoints(profile: StudentProfile): Checkpoint[] {
@@ -61,7 +125,39 @@ export function generateCheckpoints(profile: StudentProfile): Checkpoint[] {
   const topics = getAllTopics();
   const history = profile.questionHistory || {};
 
-  // 1. Review checkpoints for topics with fading memory (retrievability < 0.85)
+  // 1. HIGHEST PRIORITY: Uncleared missed questions (must answer correctly 2x in a row)
+  const unclearedQuestions = pickUnclearedQuestions(history);
+  if (unclearedQuestions.length >= 1) {
+    const topicIds = Array.from(new Set(unclearedQuestions.map((q) => q.topicId)));
+    checkpoints.push({
+      id: "review-uncleared",
+      type: "review",
+      title: "Missed Question Review",
+      description: `You have ${unclearedQuestions.length} question${unclearedQuestions.length > 1 ? "s" : ""} that need${unclearedQuestions.length === 1 ? "s" : ""} to be answered correctly twice to clear.`,
+      topicIds,
+      questions: unclearedQuestions,
+      priority: 100,
+      triggerReason: "Answer correctly 2x in a row to clear these questions",
+    });
+  }
+
+  // 2. Spaced repetition: questions due for review based on their individual schedule
+  const dueQuestions = pickDueQuestions(history);
+  if (dueQuestions.length >= 3) {
+    const topicIds = Array.from(new Set(dueQuestions.map((q) => q.topicId)));
+    checkpoints.push({
+      id: "spaced-repetition",
+      type: "spaced-repetition",
+      title: "Spaced Repetition Review",
+      description: `${dueQuestions.length} question${dueQuestions.length > 1 ? "s are" : " is"} due for review to maintain long-term memory.`,
+      topicIds,
+      questions: dueQuestions,
+      priority: 95,
+      triggerReason: "Scheduled review to strengthen memory",
+    });
+  }
+
+  // 3. Review checkpoints for topics with fading memory (retrievability < 0.85)
   const fadingTopics = topics.filter((t) => {
     const state = profile.topicStates[t.id];
     if (!state || !state.lessonCompleted) return false;
@@ -82,37 +178,16 @@ export function generateCheckpoints(profile: StudentProfile): Checkpoint[] {
         id: "review-fading",
         type: "review",
         title: "Memory Refresh",
-        description: `${topFading.length} topics need review to prevent forgetting. Quick quiz to reinforce your knowledge.`,
+        description: `${topFading.length} topics need review to prevent forgetting.`,
         topicIds: topFading.map((t) => t.id),
         questions,
-        priority: 90,
+        priority: 85,
         triggerReason: "Knowledge fading — spaced repetition review due",
       });
     }
   }
 
-  // 2. Missed-question review — surface questions the student previously got wrong
-  const missedQuestionIds = Object.values(history).filter(
-    (r) => !r.lastCorrect || r.correctCount < r.attempts
-  );
-  if (missedQuestionIds.length >= 3) {
-    const missedTopicIds = Array.from(new Set(missedQuestionIds.map((r) => r.topicId)));
-    const questions = pickQuestions(missedTopicIds, Math.min(8, missedQuestionIds.length), history);
-    if (questions.length >= 3) {
-      checkpoints.push({
-        id: "review-missed",
-        type: "review",
-        title: "Missed Question Review",
-        description: `You previously missed ${missedQuestionIds.length} question${missedQuestionIds.length > 1 ? "s" : ""}. Let's make sure you've got them now.`,
-        topicIds: missedTopicIds,
-        questions,
-        priority: 95,
-        triggerReason: "Previously incorrect answers need reinforcement",
-      });
-    }
-  }
-
-  // 3. Mastery checkpoints when a topic has low mastery but lesson completed
+  // 4. Mastery checkpoints when a topic has low mastery but lesson completed
   const weakTopics = topics.filter((t) => {
     const state = profile.topicStates[t.id];
     if (!state || !state.lessonCompleted) return false;
@@ -135,7 +210,7 @@ export function generateCheckpoints(profile: StudentProfile): Checkpoint[] {
     }
   }
 
-  // 4. Unit test checkpoints when enough topics in a unit are completed
+  // 5. Unit test checkpoints when enough topics in a unit are completed
   for (let unit = 1; unit <= 4; unit++) {
     const unitTopics = getTopicsByUnit(unit);
     const completedInUnit = unitTopics.filter(
@@ -164,7 +239,7 @@ export function generateCheckpoints(profile: StudentProfile): Checkpoint[] {
     }
   }
 
-  // 5. Cumulative checkpoint every 10 topics completed
+  // 6. Cumulative checkpoint every 10 topics completed
   const totalCompleted = topics.filter(
     (t) => profile.topicStates[t.id]?.lessonCompleted
   ).length;

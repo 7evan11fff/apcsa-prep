@@ -100,6 +100,11 @@ export interface QuestionRecord {
   correctCount: number;
   lastAttempt: string;
   lastCorrect: boolean;
+  consecutiveCorrect: number;
+  lastIncorrectAt: string | null;
+  clearedAt: string | null;
+  nextReviewAt: string | null;
+  stability: number;
 }
 
 export interface TopicState {

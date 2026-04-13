@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import ProgressRing from "@/components/ProgressRing";
 import MasteryHeatmap from "@/components/MasteryHeatmap";
 import PowerPathView from "@/components/PowerPathView";
-import { Flame, Target, Trophy, Clock, Brain, RotateCcw, ShieldCheck } from "lucide-react";
+import { Flame, Target, Trophy, Clock, Brain, RotateCcw, ShieldCheck, Timer } from "lucide-react";
 
 export default function Dashboard() {
   const { profile, loading, recordQuizAnswer, addXP } = useStudentProfile();
@@ -145,6 +145,7 @@ export default function Dashboard() {
               {checkpoint.type === "review" && <RotateCcw className="h-5 w-5 text-purple-600" />}
               {checkpoint.type === "mastery" && <Brain className="h-5 w-5 text-purple-600" />}
               {checkpoint.type === "unit-test" && <ShieldCheck className="h-5 w-5 text-purple-600" />}
+              {checkpoint.type === "spaced-repetition" && <Timer className="h-5 w-5 text-purple-600" />}
               {checkpoint.title}
             </CardTitle>
             <p className="text-sm text-muted-foreground">{checkpoint.description}</p>
